@@ -22,22 +22,18 @@ function sync() {
   done
 }
 
-# Function to get a valid directory path from user input
-function get_valid_path() {
-  while true; do
-    read -rp "$1 path: " path
-    if [[ -d "$path" ]]; then
-      echo "$path is a valid directory."
-      return 0  # Exit successfully
-    else
-      echo "Invalid path. Please enter a valid directory."
-    fi
-  done
-}
 
-# Get source and destination paths from user input
-get_valid_path "Enter source" sourceDir
-get_valid_path "Enter destination" destinationDir
 
-# Initiate synchronization
-sync $sourceDir $destinationDir
+while true; do
+  read -rp "Enter Source Directory: " source_dir
+  read -rp "Enter Destination Directory: " destination_dir
+  if [[ -d "$source_dir" && -d "$destination_dir" ]]; then
+    echo "Thie Files Will be synced from $source_dir to $destination_dir"
+    # Initiate synchronization
+    sync $source_dir $destination_dir
+    break;
+  else 
+    echo "Invalid path(s). Please enter valid directories"
+    
+  fi
+done
